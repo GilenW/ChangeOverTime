@@ -4,14 +4,46 @@ body {
 
 }
 
+
+
 svg path{
-    fill: rgb(34, 45, 45);
+    fill: rgb(15, 72, 72);
     stroke: #eee;
-    stroke-width: 6;
+    stroke-width: ;
 }
 
 svg path:hover{
-    fill: aquamarine;
+    fill: #7fffd4;
     transition: 0.6s;
     cursor: pointer;
+}
+
+svg path:active{
+    fill: #cc7722;
+}
+
+.container{
+    color:#1e1050
+}
+
+.card{
+    height: 340px;
+    width: 250px;
+    position:relative;
+}
+
+.front, .back{
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+
+}
+
+.front{
+    background-color: #cfced3;
+}
+
+.back{
+    background-color: #cfced3;
 }
