@@ -1,0 +1,17 @@
+body {
+
+    background-color: bisque;
+
+}
+
+svg path{
+    fill: rgb(34, 45, 45);
+    stroke: #eee;
+    stroke-width: 6;
+}
+
+svg path:hover{
+    fill: aquamarine;
+    transition: 0.6s;
+    cursor: pointer;
+}
