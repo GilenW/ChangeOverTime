@@ -18,18 +18,31 @@
 // };
 
 
+
+
+//start from here
+
 let card = document.querySelector(".card");
 card.style.display = "none";
 let cardStatus = false;
 
-$(function(){
-    $('[id=BR]').on('click',function(){
-        
-        let Brazil = $(this)
-        let BR = $(this)["0"].id
-        let AllCountries = $('[id=BR')
+function reloadPage(){
+    document.location.reload();
+}
 
-        console.log($((BR)))
+$(function(){
+    $('[id*=Place_').on('click',function(){
+        
+        
+        let Place = $(this)
+        let placeID = $(this).get(0).id
+        let Allplaces = $('[id*=Place_')
+
+        console.log($((placeID)))
+
+        Allplaces.css('fill','rgb(97, 176, 142)')
+        Place.css('fill','#cc7722')
+
 
         if(cardStatus == true){
             // Brazil.css('fill','rgb(15, 72, 72)')
@@ -38,10 +51,17 @@ $(function(){
         else{
             //Brazil.css('fill','#cc7722')
             showCard();
+            predictions();
         }
+
+
+
+
     })
 
 })
+
+
 
 
 function hideCard(){
@@ -55,3 +75,32 @@ function showCard(){
     
 }
 
+
+// API
+
+async function predictions(){
+
+    const response = await fetch(
+        'https://api.mage.ai/v1/predict',
+        {
+          body: JSON.stringify({
+            api_key: 'AApe5XnnybWTwLuGxss0VBcBeOXelVv5itRbQK1b',
+            model: 'custom_prediction_regression_1649531439899',
+            version: '1',
+            features: [{
+                "ac": 167,
+                "ano_estados": 2009,
+                "ma": 828,
+                "mt": 1049,
+                "pa": 4281,
+                "to_": 61
+            }],
+          }),
+          method: 'POST',
+        },
+      );
+      
+      response.json().then(predictions => console.log(predictions))
+    
+        
+}
