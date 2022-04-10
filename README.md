@@ -2,7 +2,7 @@
 
 
 Credits:
-Thanks to mentor Ryan Yang for helping us with MageAI
+Thanks to mentor Ryan and Degerous Dang for guiding us on MageAI
 
 Background resource:
 https://wweb.dev/resources/animated-css-background-generator/
