@@ -23,17 +23,20 @@
 //start from here
 
 let card = document.querySelector(".card");
+let notice = document.querySelector("#notice");
 card.style.display = "none";
 let cardStatus = false;
 let selectStatus = false;
 
-//constant to get predcition
+var selectedCountry = 'USA';
 
 
-
-
-$(function () {
-    $('[id*=Place_').on('click', function () {
+$(function(){
+    $('[id*=Place_').on('click',function(){
+        
+       
+        notice.style.display = 'block';
+        document.getElementById('pred').style.display = 'none';
 
 
         let Place = $(this)
@@ -43,8 +46,10 @@ $(function () {
         const Place2 = document.getElementById(placeID);
         const nameAttribute = Place2.getAttribute('name');
 
-        Allplaces.css('fill', 'rgb(97, 176, 142)')
-        Place.css('fill', '#cc7722')
+
+        Allplaces.css('fill','##FACAC')
+        Place.css('fill','583C87')
+
 
 
         if (cardStatus == true) {
@@ -60,8 +65,12 @@ $(function () {
         }
 
 
-        console.log(nameAttribute);
+        placeID = placeID.replace('Place_','');
 
+       
+
+        console.log(nameAttribute);
+        selectedCountry = placeID;
 
     })
 
@@ -70,20 +79,22 @@ $(function () {
 
 
 
-$(function () {
 
-    $('*[class^="Place_"]').on('click', function () {
-
-
+$(function(){
+    
+    $('*[class^="Place_"]').on('click',function(){
+        
         let Place = $(this)
         var nameAttribute = $(this).attr('class');
         let Allplaces = $('*[class^="Place_"]')
-        if (selectStatus == true) {
-            Allplaces.css('fill', 'rgb(97, 176, 142)')
+        if(selectStatus == true){
+            Allplaces.css('fill','#FFACAC')
+
+
         }
 
 
-        nameAttribute = nameAttribute.replace('Place_', '');
+        Place.css('fill','583C87')
 
 
         Place.css('fill', '#cc7722')
@@ -101,7 +112,7 @@ $(function () {
         }
 
 
-        console.log(nameAttribute);
+        
 
 
     })
@@ -128,6 +139,9 @@ function showCard() {
 function clicked() {
     let userInput = document.getElementById('user-num-input').value;
 
+    notice.style.display = "none";
+    document.getElementById('pred').style.display = 'block';
+
     userInput = parseFloat(userInput);
     fetch(
         'https://api.mage.ai/v1/predict',
@@ -136,7 +150,9 @@ function clicked() {
                 "api_key": "AApe5XnnybWTwLuGxss0VBcBeOXelVv5itRbQK1b",
                 "features": [{
                     "tree_loss_median": userInput,
-                    "countrycode": "USA"
+
+                    "countrycode": selectedCountry
+
                 }],
                 "model": "custom_prediction_regression_1649548158277",
                 "version": "2",
@@ -148,12 +164,22 @@ function clicked() {
     ).then(response => response.json()).then(response => {
         console.log(response);
 
+
         document.getElementById('pred').textContent = response[0].prediction;
+
 
     })
 
     console.log(userInput);
 }
+
+
+window.addEventListener('DOMContentLoaded', function () {
+    console.log("hello")
+    document.getElementById("btn").addEventListener("click", clicked);
+    
+});
+
 
 window.addEventListener('DOMContentLoaded', function () {
     console.log("hello")
