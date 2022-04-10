@@ -25,13 +25,12 @@
 let card = document.querySelector(".card");
 card.style.display = "none";
 let cardStatus = false;
+let selectStatus = false;
 
 //constant to get predcition
 
 
-function reloadPage(){
-    document.location.reload();
-}
+
 
 $(function(){
     $('[id*=Place_').on('click',function(){
@@ -45,6 +44,48 @@ $(function(){
         const nameAttribute = Place2.getAttribute('name');
 
         Allplaces.css('fill','rgb(97, 176, 142)')
+        Place.css('fill','#cc7722')
+
+
+        if(cardStatus == true){
+            // Brazil.css('fill','rgb(15, 72, 72)')
+            hideCard();
+        }
+        else{
+            //Brazil.css('fill','#cc7722')
+            showCard();
+            $('#placeName').text(nameAttribute);
+            selectStatus = true;
+
+        }
+
+       
+        console.log(nameAttribute);
+
+
+    })
+
+
+})
+
+
+
+$(function(){
+    
+    $('*[class^="Place_"]').on('click',function(){
+        
+
+        let Place = $(this)
+        var nameAttribute = $(this).attr('class');
+        let Allplaces = $('*[class^="Place_"]')
+        if(selectStatus == true){
+            Allplaces.css('fill','rgb(97, 176, 142)')
+        }
+
+        
+        nameAttribute = nameAttribute.replace('Place_','');
+
+        
         Place.css('fill','#cc7722')
 
 
@@ -87,17 +128,13 @@ function showCard(){
         'https://api.mage.ai/v1/predict',
         {
           body: JSON.stringify({
-            api_key: 'AApe5XnnybWTwLuGxss0VBcBeOXelVv5itRbQK1b',
-            model: 'custom_prediction_regression_1649531439899',
+            api_key: "7zVQLcz1imMRz6r982waYK7GCGn2lVwBQ2QQyZSK",
+            model: "custom_prediction_regression_1649546173910",
             version: '1',
-            features: [{
-                "ac": 167,
-                "ano_estados": 2009,
-                "ma": 828,
-                "mt": 1049,
-                "pa": 4281,
-                "to_": 61
-            }],
+            features: [
+                {"id":26123},
+                {"id":49143}
+            ],
           }),
           method: 'POST',
         },
