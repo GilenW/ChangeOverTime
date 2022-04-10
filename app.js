@@ -41,7 +41,8 @@ $(function(){
         let placeID = $(this).get(0).id
         let Allplaces = $('[id*=Place_')
 
-        console.log($((placeID)))
+        const Place2 = document.getElementById(placeID);
+        const nameAttribute = Place2.getAttribute('name');
 
         Allplaces.css('fill','rgb(97, 176, 142)')
         Place.css('fill','#cc7722')
@@ -54,9 +55,12 @@ $(function(){
         else{
             //Brazil.css('fill','#cc7722')
             showCard();
-            
+            $('#placeName').text(nameAttribute);
 
         }
+
+       
+        console.log(nameAttribute);
 
 
     })
@@ -97,12 +101,11 @@ function showCard(){
           }),
           method: 'POST',
         },
-      ).then(response=> response.json()).then(response=>{card.innerHTML = response[0].prediction})
+      ).then(response=> response.json()).then(response=>{
+          console.log(response);
 
-      //this is what we are trying to do. 
-      //
-      
+          document.getElementById('pred').textContent = response[0].prediction;
         
-
+        })
 
 
