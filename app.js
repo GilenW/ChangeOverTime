@@ -23,19 +23,21 @@
 //start from here
 
 let card = document.querySelector(".card");
+let notice = document.querySelector("#notice");
 card.style.display = "none";
 let cardStatus = false;
 let selectStatus = false;
 
-//constant to get predcition
-
-
+var selectedCountry = 'USA';
 
 
 $(function(){
     $('[id*=Place_').on('click',function(){
         
-        
+       
+        notice.style.display = 'block';
+        document.getElementById('pred').style.display = 'none';
+
         let Place = $(this)
         let placeID = $(this).get(0).id
         let Allplaces = $('[id*=Place_')
@@ -43,8 +45,8 @@ $(function(){
         const Place2 = document.getElementById(placeID);
         const nameAttribute = Place2.getAttribute('name');
 
-        Allplaces.css('fill','rgb(97, 176, 142)')
-        Place.css('fill','#cc7722')
+        Allplaces.css('fill','##FACAC')
+        Place.css('fill','583C87')
 
 
         if(cardStatus == true){
@@ -59,9 +61,11 @@ $(function(){
 
         }
 
+        placeID = placeID.replace('Place_','');
+
        
         console.log(nameAttribute);
-
+        selectedCountry = placeID;
 
     })
 
@@ -74,19 +78,18 @@ $(function(){
     
     $('*[class^="Place_"]').on('click',function(){
         
-
         let Place = $(this)
         var nameAttribute = $(this).attr('class');
         let Allplaces = $('*[class^="Place_"]')
         if(selectStatus == true){
-            Allplaces.css('fill','rgb(97, 176, 142)')
+            Allplaces.css('fill','#FFACAC')
         }
 
         
         nameAttribute = nameAttribute.replace('Place_','');
 
         
-        Place.css('fill','#cc7722')
+        Place.css('fill','583C87')
 
 
         if(cardStatus == true){
@@ -100,9 +103,7 @@ $(function(){
 
         }
 
-       
-        console.log(nameAttribute);
-
+        
 
     })
 
@@ -124,25 +125,42 @@ function showCard(){
 
 
 // API
- fetch(
+
+function clicked() {
+    let userInput = document.getElementById('user-num-input').value;
+    notice.style.display = "none";
+    document.getElementById('pred').style.display = 'block';
+    userInput = parseFloat(userInput);
+    fetch(
         'https://api.mage.ai/v1/predict',
         {
-          body: JSON.stringify({
-            api_key: "7zVQLcz1imMRz6r982waYK7GCGn2lVwBQ2QQyZSK",
-            model: "custom_prediction_regression_1649546173910",
-            version: '1',
-            features: [
-                {"id":26123},
-                {"id":49143}
-            ],
-          }),
-          method: 'POST',
+            body: JSON.stringify({
+                "api_key": "AApe5XnnybWTwLuGxss0VBcBeOXelVv5itRbQK1b",
+                "features": [{
+                    "tree_loss_median": userInput,
+                    "countrycode": selectedCountry
+                }],
+                "model": "custom_prediction_regression_1649548158277",
+                "version": "2",
+                "bypass_experiment": true,
+                "test": true
+            }),
+            method: 'POST',
         },
-      ).then(response=> response.json()).then(response=>{
-          console.log(response);
+    ).then(response => response.json()).then(response => {
+        console.log(response);
 
-          document.getElementById('pred').textContent = response[0].prediction;
-        
-        })
+        document.getElementById('pred').textContent = response[0].prediction;
+
+    })
+
+    console.log(userInput);
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+    console.log("hello")
+    document.getElementById("btn").addEventListener("click", clicked);
+    
+});
 
 
