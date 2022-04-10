@@ -132,9 +132,9 @@ function showCard(){
             model: "custom_prediction_regression_1649546173910",
             version: '1',
             features: [
-                {"id":26123},
-                {"id":49143}
-            ],
+                {"tree_loss_median": 114963439.2},
+                {"countrycode": "MYS"}
+              ],
           }),
           method: 'POST',
         },
