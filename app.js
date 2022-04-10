@@ -26,6 +26,9 @@ let card = document.querySelector(".card");
 card.style.display = "none";
 let cardStatus = false;
 
+//constant to get predcition
+
+
 function reloadPage(){
     document.location.reload();
 }
@@ -51,10 +54,9 @@ $(function(){
         else{
             //Brazil.css('fill','#cc7722')
             showCard();
-            predictions();
+            
+
         }
-
-
 
 
     })
@@ -77,10 +79,7 @@ function showCard(){
 
 
 // API
-
-async function predictions(){
-
-    const response = await fetch(
+ fetch(
         'https://api.mage.ai/v1/predict',
         {
           body: JSON.stringify({
@@ -98,9 +97,12 @@ async function predictions(){
           }),
           method: 'POST',
         },
-      );
+      ).then(response=> response.json()).then(response=>{card.innerHTML = response[0].prediction})
+
+      //this is what we are trying to do. 
+      //
       
-      response.json().then(predictions => console.log(predictions))
-    
         
-}
+
+
+
